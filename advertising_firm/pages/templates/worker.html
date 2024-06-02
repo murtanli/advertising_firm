@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/css_worker.css' %}">
+    <title>Заявки</title>
+    <script>
+        function showFaultInfo() {
+            var orders = {{ orders|safe }};
+            
+            var select = document.getElementById('faults');
+            var selectedOrderID = select.value;
+            var selectedOrder = orders.find(order => order.order_name == selectedOrderID);
+        
+            document.getElementById('cre_appl').innerHTML = '<p>Выполняет - ' + (selectedOrder ? selectedOrder.user : '') + '</p>';
+            document.getElementById('fault').innerHTML = '<p>Название услуги - ' + (selectedOrder ? selectedOrder.order_name : '') + '</p>';
+            document.getElementById('fault_text').innerHTML = '<textarea>' + (selectedOrder ? selectedOrder.description : '') + '</textarea>';
+            document.getElementById('status').innerHTML = '<p>Статус - ' + (selectedOrder ? selectedOrder.status : '') + '</p>';
+            document.getElementById('inp_id').value = selectedOrder.order_id;
+
+        }
+
+    
+    </script>
+</head>
+<body>
+    <div class="block_auth">
+        <div class="title">
+            <p>Заявки</p>
+            <select class="faults" name="faults" id="faults" onchange="showFaultInfo()">
+                <option value="">Выберите заявку</option>
+                {% for order in orders %}
+                    <option value="{{ order.order_name }}">{{ order.order_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="inf">
+            <div class="cre_appl" id="cre_appl">
+                <p>Выполняет - </p>
+            </div>
+            <div class="fault" id="fault">
+                <p>Название услуги - </p>
+            </div>
+            <div class="fault_text" id="fault_text">
+                <textarea></textarea>
+            </div>
+            <div class="status" id="status">
+                <p>Статус - </p>
+            </div>
+            <form class="button" method="post" action="{% url 'worker_view' %}">
+                {% csrf_token %}
+                <input id="inp_id" name="id" type="text" style="display: none;" value="{{ order_id }}">
+                <button id="button_op" class="button_op" onclick="ch_st()">Изменить статус</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

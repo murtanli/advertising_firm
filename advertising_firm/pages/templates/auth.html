@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/css_auth.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+        <div class="message_block">
+            <div class="message">
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="close_message">
+                    <button onclick="closeMessageBlock()">закрыть</button>
+                </div>
+            </div>
+        </div>
+        
+    {% endif %}
+    <div class="block_auth">
+        <div class="title">
+            <p>Авторизация</p>
+        </div>
+        <form class="inputs" method="post" action="{% url 'auth' %}">
+            {% csrf_token %}
+            <input name="login" id="loginid" class="login" type="text" placeholder="Логин">
+            <input name="password" id="passwordid" class="password" type="password" placeholder="Пароль">
+            <div class="button">
+                <button onclick="openPage()" class="button_exit">Войти</button>
+            </div>
+        </form>
+        <div class="sign">
+            <a href="{% url 'sign_in' %}">Нет аккаунта ?</a>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function openPage() {
+    var logintext = document.getElementById("loginid").value;
+    var passwordtext = document.getElementById("passwordid").value;
+    if (logintext === "" && passwordtext === "") {
+        alert("Введите все поля !");
+    }
+}
+function closeMessageBlock() {
+    var mesBlock = document.querySelector('.message_block');
+    mesBlock.classList.remove('message_block');
+    mesBlock.classList.add('message_block_none');
+}
+</script>

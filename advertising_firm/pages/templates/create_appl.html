@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/css_cr_apl.css' %}">
+    <title>Создание заявки</title>
+    <script>
+        function updateDescription() {
+            var services = {{ services|safe }};
+            var discount  = {{ profile.LevelID.Discount|safe }};
+            var serviceSelect = document.getElementById('serviceSelect');
+            var descriptionField = document.getElementById('description');
+            var priceField = document.getElementById('price');
+            var totalAmountField = document.getElementById('TotalAmount');
+            
+            var selectedServiceID = serviceSelect.value;
+            var selectedService = services.find(service => service.ServiceID == selectedServiceID);
+
+            descriptionField.value = selectedService ? selectedService.Description : '';
+            priceField.value = selectedService ? selectedService.Price + ' Руб': '';
+           
+            var totalAmount = selectedService.Price - (selectedService.Price * discount / 100);
+            totalAmountField.textContent = 'Итоговая цена с учетом скидки: ' + totalAmount.toFixed(2) + ' Руб';
+            
+        }
+    </script>
+</head>
+<body>
+    <div class="block_auth">
+        <div class="title">
+            <p>Создание заявки</p>
+        </div>
+        <form class="inputs" method="post" action="{% url 'create_appl' %}">
+            {% csrf_token %}
+            <label for="serviceSelect" style="margin-bottom: 2vh;">Выберите услугу</label>
+            <select class="namefault" id="serviceSelect" name="serviceSelect" onchange="updateDescription()">
+                <option value="">Выберите услугу</option>
+                {% for service in services %}
+                    <option value="{{ service.ServiceID }}">{{ service.ServiceName }}</option>
+                {% endfor %}
+            </select>
+            <textarea id="description" name="ysl_desc" cols="30" rows="10" aria-valuemax="10" class="textfault" placeholder="Описание услуги" readonly></textarea>
+            <input id="price" class="namefault" type="text" name="price" placeholder="Цена услуги" readonly>
+            
+            <textarea id="textfault" cols="30" rows="10" aria-valuemax="10" class="textfault" name="textfault" placeholder="Описание заявки"></textarea>
+            <p id="TotalAmount">Итоговая цена: </p>
+            <div class="button">
+                <button class="button_save" type="submit">Создать</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var services = {{ services|safe }};
+    </script>
+</body>
+</html>

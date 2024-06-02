@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="{% static 'css/main_css.css' %}">
+</head>
+<body>
+    {% if messages %}
+    <div class="message_block">
+        <div class="message">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <div class="close_message">
+                <button onclick="closeMessageBlock()">закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+{% endif %}
+    <div class="container">
+        <div class="title_cont">
+            <h1>Зачем нужна реклама?</h1>
+            <p>Мы поможем сделать Ваш продукт лучшим на рынке</p>
+        </div>
+        {% if request.user.is_authenticated %}
+            {% if employee == 'Дизайнер' or employee == 'Пост печатник' %}
+                <div class="profile_link">
+                    <p>{{ employee }}</p>
+                    <a>{{ user.username }}</a>
+                    <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+                </div>
+            {% else %}
+                <div class="profile_link">
+                    <p>{{ user.username }}</p>
+                    <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+                </div>
+            {% endif %}
+        {% endif %}
+        
+        <div class="content">
+            <div style="background-color: rgb(52,188,242);" class="content-block">
+                <img src="{% static 'images/img1.jpg' %}" alt="Увеличение видимости и узнаваемости бренда">
+                <h2>Увеличение видимости и узнаваемости бренда</h2>
+                <p>Реклама помогает повысить узнаваемость бренда среди целевой аудитории. Когда люди регулярно видят ваш бренд через различные рекламные каналы, они начинают запоминать его и ассоциировать с вашими продуктами или услугами.</p>
+            </div>
+            <div style="background-color: rgb(102,57,182);" class="content-block">
+                <img src="{% static 'images/img2.jpg' %}" alt="Привлечение новой аудитории и увеличение продаж">
+                <h2>Привлечение новой аудитории и увеличение продаж</h2>
+                <p>Эффективная реклама привлекает новых клиентов и стимулирует их к покупкам. Заказывая рекламу, вы можете обратиться к потенциальным клиентам, которые ранее не знали о вашем бизнесе, и заинтересовать их вашими предложениями.</p>
+            </div>
+            <div style="background-color: rgb(232,28,98);" class="content-block">
+                <img src="{% static 'images/img3.jpg' %}" alt="Конкурентное преимущество">
+                <h2>Конкурентное преимущество</h2>
+                <p>Реклама помогает вам выделиться среди конкурентов. В условиях рынка, где многие компании предлагают схожие продукты и услуги, реклама позволяет подчеркнуть уникальные достоинства вашего предложения и убедить клиентов выбрать именно вас.</p>
+            </div>
+            <div style="background-color: rgb(154,105,203);" class="content-block">
+                <img src="{% static 'images/img4.jpg' %}" alt="Управление репутацией и улучшение имиджа">
+                <h2>Управление репутацией и улучшение имиджа</h2>
+                <p>Реклама позволяет формировать положительный имидж вашего бренда. Вы можете использовать рекламные кампании для демонстрации сильных сторон вашего бизнеса, таких как качество продукции, превосходное обслуживание клиентов или инновации, что способствует укреплению доверия к вашему бренду.</p>
+            </div>
+        </div>
+    </div>
+    <div class="content_block2">
+        <img src="{% static 'images/pattern3.png' %}" alt="">
+        <div class="titles">
+            <h1>НАШИ УСЛУГИ</h1>
+            <p>МЫ ПРЕДОСТАВЛЯЕМ УСЛУГИ РЕКЛАМИРОВАНИЯ ВАШЕГО БИЗНЕСА, КОТОРЫЕ ПОМОГУТ ДЕРЖАТЬ ВАШ БИЗНЕС НА ПЛАВУ, ПРИВЛЕКАТЬ БОЛЬШЕ ПОКУПАТЕЛЕЙ, СЧИТАТЬСЯ С КОНЕКУРЕНТАМИ И МНОГОЕ ДРУГОЕ ДЛЯ ПООДЕРЖАНИЯ ВАШЕГО ПРОДУКТА НА РЫНКЕ </p>
+        </div>
+        <div class="block2_ysl">
+            <div class="block_ysl_sq">
+                <a href="{% url 'create_appl' %}" class="block_ysl_sq_des">
+                    <img src="{% static 'images/list.jpg' %}" alt="">
+                    <div class="title_text">
+                        <h1>РЕКЛАМА НА ЛИСТОВКАХ</h1>
+                        <p>Реклама на листовках необходима для прямого контакта с целевой аудиторией, локального продвижения, экономичности и создания тактильного взаимодействия, что делает ее эффективным инструментом для привлечения клиентов в конкретных районах</p>
+                    </div>
+                </a>
+                <a href="{% url 'create_appl' %}"  class="block_ysl_sq_des">
+                    <img src="{% static 'images/afish.jpg' %}" alt="">
+                    <div class="title_text">
+                        <h1>РЕКЛАМА НА СТЕНДАХ</h1>
+                        <p>Реклама на стендах привлекает внимание большого количества людей, улучшает узнаваемость бренда, обеспечивает долговременное присутствие и эффективна для охвата широкой аудитории в местах с высоким трафиком</p>
+                    </div>
+                </a>
+                <a href="{% url 'create_appl' %}"  class="block_ysl_sq_des">
+                    <img src="{% static 'images/tel.webp' %}" alt="">
+                    <div class="title_text">
+                        <h1>РЕКЛАМА В МОБИЛЬНЫХ ПРИЛОЖЕНИЯХ</h1>
+                        <p>Реклама в мобильных играх необходима для охвата активной и вовлеченной аудитории, повышения узнаваемости бренда среди молодых пользователей, интеграции рекламы в игровой процесс для большей эффективности и получения точных данных о поведении и предпочтениях игроков</p>
+                    </div>
+                </a>
+                <a href="{% url 'create_appl' %}"  class="block_ysl_sq_des">
+                    <img src="{% static 'images/site.jpg' %}" alt="">
+                    <div class="title_text">
+                        <h1>РЕКЛАМА НА САЙТАХ</h1>
+                        <p>Реклама на сайтах необходима для широкого охвата целевой аудитории, повышения узнаваемости бренда, таргетирования по интересам и поведению пользователей, а также для измеримого анализа эффективности рекламных кампаний</p>
+                    </div>
+                </a>
+                <a href="{% url 'create_appl' %}"  class="block_ysl_sq_des">
+                    <img src="{% static 'images/apple.jpg' %}" alt="">
+                    <div class="title_text">
+                        <h1>ДРУГОЙ ВИД РЕКЛАМЫ</h1>
+                        <p>Не нашли нужный способ? Напишите нам, мы поможем!</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="block_auth_sign">
+            <div class="auth">
+                <img src="{% static 'images/auth_back.jpg' %}" alt="">
+                <div class="block_auth">
+                    <h1>ВОЙТИ В СВОЙ ПРОФИЛЬ</h1>
+                    <p>Войдите в свой аккаунт чтобы продолжить покупки</p>
+                    <a href="{% url 'auth' %}">Войти</a>
+                </div>
+            </div>
+            <div class="sign">
+                <img src="{% static 'images/sign_back.jpg' %}" alt="">
+                <div class="block_sign">
+                    <h1>СОЗДАЙТЕ СВОЙ ПРОФИЛЬ</h1>
+                    <p>Нет профиля? Не проблема, создайте сейчас!</p>
+                    <a href="{% url 'sign_in' %}">Создайте профиль</a>
+                </div>
+            </div>
+        </div>
+        <div class="block_form_feedback">
+            <div class="form_feddback">
+                <div class="form_title">
+                    <h1>Обратная свзяь</h1>
+                    <p>Поделитесь мнением о нашей работе или задайте нам любой интересующий вас вопрос в поле комментарий</p>
+                </div>
+                <hr>
+                <form class="form_design" method="post" action="{% url 'sav_form' %}">
+                    {% csrf_token %}
+                    <input type="text" id="name" name="name" placeholder="Имя">
+                    <input type="text" id="last_name" name="last_name" placeholder="Фамилия">
+                    <input type="text" id="num_phone" name="num_phone" placeholder="Телефон">
+                    <input type="text" name="email" id="email" placeholder="E-mail">
+                    <textarea name="comment" id="comment" placeholder="Комментарий"></textarea>
+                    <button>Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="info">
+            <p>© Advertising_firm 1991-2023. все права защищены</p>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    function openPage() {
+    var logintext = document.getElementById("loginid").value;
+    var passwordtext = document.getElementById("passwordid").value;
+    if (logintext === "" && passwordtext === "") {
+        alert("Введите все поля !");
+    }
+}
+function closeMessageBlock() {
+    var mesBlock = document.querySelector('.message_block');
+    mesBlock.classList.remove('message_block');
+    mesBlock.classList.add('message_block_none');
+}
+</script>
